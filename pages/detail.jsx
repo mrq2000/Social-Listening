@@ -57,6 +57,7 @@ const OverView = () => {
       <Layout>
         {data.comments_aggregate.nodes.map((comment) => (
           <Comment
+            key={comment.comment}
             author={<a>Han Solo</a>}
             avatar={(
               <Avatar
@@ -73,13 +74,20 @@ const OverView = () => {
               marginBottom: 16,
             }}
             datetime={(
-              <p>
-                {comment.created_at
-                  ? dateTimeFormat.format(
-                    parseInt(`${comment.created_at}000`, 10),
-                  )
-                  : ''}
-              </p>
+              <>
+                <Row>
+                  <p>
+                    {comment.created_at
+                      ? dateTimeFormat.format(
+                        parseInt(`${comment.created_at}000`, 10),
+                      )
+                      : ''}
+                  </p>
+                  <a rel="noreferrer" target="_blank" href={`https://www.facebook.com/${comment.comment_id}`} style={{ paddingLeft: 16 }}>
+                    click me
+                  </a>
+                </Row>
+              </>
             )}
           />
         ))}

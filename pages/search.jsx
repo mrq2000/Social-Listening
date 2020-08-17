@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import Layout from '../components/common/Layout';
@@ -10,15 +10,38 @@ import SEARCH_POST from '../graphql/queries/searchPost';
 
 const Home = () => {
   const router = useRouter();
+  const [load, setLoad] = useState(false);
   const { key } = router.query;
 
-  const { data, loading } = useQuery(SEARCH_POST, {
+  const { data, loading, fetchMore } = useQuery(SEARCH_POST, {
     variables: {
       content: `%${key}%`,
       limit: 10,
       offset: 0,
     },
   });
+
+  const handleLoadMore = async () => {
+    setLoad(true);
+
+    await fetchMore({
+      variables: {
+        offset: data.posts.length,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          posts: [
+            ...prev.posts,
+            ...fetchMoreResult.posts,
+          ],
+        };
+      },
+    });
+
+    setLoad(false);
+  };
 
   if (loading) {
     return (
@@ -40,6 +63,10 @@ const Home = () => {
             </Col>
           ))}
         </Row>
+
+        <Button onClick={() => handleLoadMore()} type="primary" loading={load}>
+          Get More
+        </Button>
       </Layout>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Pie } from 'react-chartjs-2';
-import { Row } from 'antd';
+import { Pie, Bar } from 'react-chartjs-2';
+import { Row, Col, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import Layout from '../components/common/Layout';
@@ -21,6 +21,19 @@ const OverView = () => {
     },
   };
 
+  const barOptions = {
+    responsive: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
+
   if (typeof router.query.post !== 'undefined') {
     post = JSON.parse(router.query.post);
     data = {
@@ -34,15 +47,64 @@ const OverView = () => {
           ],
           backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
           hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+          label: 'Biểu đồ đánh giá của người dùng',
         },
       ],
     };
   }
+
   if (post && data) {
+    const handle = (key) => {
+      router.push({ pathname: '/detail', query: { key, postId: `${post.post_id}` } });
+    };
+
     return (
       <Layout>
         <Card post={post} />
-        <Pie data={data} height={300} width={400} options={options} />
+        <Row justify="space-around" align="center" style={{ marginTop: 16 }}>
+          <Col style={{ display: 'flex', alignItems: 'center' }}>
+            <Pie data={data} height={300} width={400} options={options} />
+          </Col>
+
+          <Col>
+            <Bar data={data} width={400} height={400} options={barOptions} />
+          </Col>
+        </Row>
+
+        <Row justify="space-around" style={{ marginTop: 16 }}>
+          <Button
+            style={{
+              backgroundColor: '#36A2EB',
+              color: '#fff',
+              fontWeight: 'bold',
+            }}
+            onClick={() => handle('__lb__positive')}
+          >
+            Tích Cực
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: '#FF6384',
+              color: '#fff',
+              fontWeight: 'bold',
+            }}
+            onClick={() => handle('__lb__negative')}
+          >
+            Tiêu Cực
+          </Button>
+
+          <Button
+            style={{
+              backgroundColor: '#FFCE56',
+              color: '#fff',
+              fontWeight: 'bold',
+            }}
+            onClick={() => handle('__lb__neutral')}
+          >
+            Trung Lập
+          </Button>
+        </Row>
       </Layout>
     );
   }

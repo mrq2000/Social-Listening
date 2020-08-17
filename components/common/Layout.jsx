@@ -6,7 +6,10 @@ import {
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
+  ArrowLeftOutlined,
 } from '@ant-design/icons';
+import Router from 'next/router';
+
 import Header from './Header';
 
 const { Content, Footer, Sider } = Layout;
@@ -49,6 +52,10 @@ const MainLayout = ({ children }) => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
+              <ArrowLeftOutlined
+                style={{ fontSize: 24, marginBottom: 8 }}
+                onClick={() => Router.back()}
+              />
               {children}
             </div>
           </Content>

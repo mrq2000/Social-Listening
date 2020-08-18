@@ -54,8 +54,8 @@ const OverView = () => {
   }
 
   if (post && data) {
-    const handle = (key) => {
-      router.push({ pathname: '/detail', query: { key, postId: `${post.post_id}` } });
+    const handle = (label) => {
+      router.push({ pathname: '/detail', query: { label, postId: `${post.post_id}` } });
     };
 
     return (

@@ -17,6 +17,35 @@ const { SubMenu } = Menu;
 
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const handleNavigation = (e) => {
+    const { key } = e;
+
+    switch (key) {
+      case '1':
+        Router.push('/');
+        break;
+      case '2':
+        Router.push('/');
+        break;
+      case '3':
+        Router.push('/token');
+        break;
+      case '4':
+        Router.push('/');
+        break;
+      case '5':
+        Router.push('/');
+        break;
+      case '6':
+        Router.push('/');
+        break;
+      case '7':
+        Router.push('/');
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header />
@@ -27,21 +56,26 @@ const MainLayout = ({ children }) => {
           collapsed={collapsed}
           onCollapse={(val) => setCollapsed(val)}
         >
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            onClick={(e) => handleNavigation(e)}
+          >
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              Option 1
+              Trang Chủ
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-              Option 2
+              Fanpage của bạn
             </Menu.Item>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-              <Menu.Item key="3">Tom</Menu.Item>
-              <Menu.Item key="4">Bill</Menu.Item>
+            <SubMenu key="sub1" icon={<UserOutlined />} title="Tài Khoản">
+              <Menu.Item key="3">Token của bạn</Menu.Item>
+              <Menu.Item key="4">Cách Lấy Token</Menu.Item>
               <Menu.Item key="5">Alex</Menu.Item>
             </SubMenu>
-            <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
+            <SubMenu key="sub2" icon={<TeamOutlined />} title="About us">
+              <Menu.Item key="6">Phạm Hữu Anh Quốc</Menu.Item>
+              <Menu.Item key="8">Ngô Song Việt Hoàng</Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>

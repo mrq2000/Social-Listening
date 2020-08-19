@@ -10,6 +10,8 @@ import {
   ShareAltOutlined,
 } from '@ant-design/icons';
 
+import dateTimeFormat from '../../helper/dateTimeFormat';
+
 const Content = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
@@ -23,18 +25,16 @@ const Text = styled.div`
 `;
 
 const MainCard = ({ post }) => {
-  const dateTimeFormat = new Intl.DateTimeFormat('vi', {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  });
   const date = post.created_at
     ? dateTimeFormat.format(parseInt(`${post.created_at}000`, 10))
     : '';
 
   return (
     <Link
-      href={{ pathname: '/overview', query: { post: JSON.stringify(post) } }}
+      href={{
+        pathname: '/overview',
+        query: { post: JSON.stringify(post), postId: post.post_id },
+      }}
     >
       <Card hoverable>
         <Row gutter={16}>

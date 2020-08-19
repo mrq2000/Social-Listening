@@ -2,18 +2,14 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import {
-  Row, Avatar, Comment, Button,
+  Row, Avatar, Comment, Button, Col,
 } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import Layout from '../components/common/Layout';
+import RemoveComment from '../components/common/RemoveComment';
 import GET_COMMENTS from '../graphql/queries/getComments';
-
-const dateTimeFormat = new Intl.DateTimeFormat('vi', {
-  year: 'numeric',
-  month: 'short',
-  day: '2-digit',
-});
+import dateTimeFormat from '../helper/dateTimeFormat';
 
 const OverView = () => {
   const [loading, setLoading] = useState(false);
@@ -55,42 +51,56 @@ const OverView = () => {
   if (data && data.comments_aggregate && data.comments_aggregate.nodes) {
     return (
       <Layout>
-        {data.comments_aggregate.nodes.map((comment) => (
-          <Comment
-            key={comment.comment}
-            author={<a>Han Solo</a>}
-            avatar={(
-              <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt="Han Solo"
+        <Row gutter={[16, 8]}>
+          {data.comments_aggregate.nodes.map((comment) => (
+            <Col span={12}>
+              <Comment
+                author={<a>Han Solo</a>}
+                avatar={(
+                  <Avatar
+                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    alt="Han Solo"
+                  />
+                )}
+                content={<p>{comment.content}</p>}
+                style={{
+                  backgroundColor: '#fff',
+                  paddingLeft: 16,
+                  paddingRight: 16,
+                  borderRadius: 8,
+                  marginBottom: 16,
+                }}
+                datetime={(
+                  <Row gutter={16}>
+                    <Col>
+                      <p>
+                        {comment.created_at
+                          ? dateTimeFormat.format(
+                            parseInt(`${comment.created_at}000`, 10),
+                          )
+                          : ''}
+                      </p>
+                    </Col>
+
+                    <Col>
+                      <a
+                        rel="noreferrer"
+                        target="_blank"
+                        href={`https://www.facebook.com/${comment.comment_id}`}
+                      >
+                        click me
+                      </a>
+                    </Col>
+
+                    <Col>
+                      <RemoveComment id={`${postId}_${comment.comment_id}`} />
+                    </Col>
+                  </Row>
+                )}
               />
-            )}
-            content={<p>{comment.content}</p>}
-            style={{
-              backgroundColor: '#fff',
-              paddingLeft: 16,
-              paddingRight: 16,
-              borderRadius: 8,
-              marginBottom: 16,
-            }}
-            datetime={(
-              <>
-                <Row>
-                  <p>
-                    {comment.created_at
-                      ? dateTimeFormat.format(
-                        parseInt(`${comment.created_at}000`, 10),
-                      )
-                      : ''}
-                  </p>
-                  <a rel="noreferrer" target="_blank" href={`https://www.facebook.com/${comment.comment_id}`} style={{ paddingLeft: 16 }}>
-                    click me
-                  </a>
-                </Row>
-              </>
-            )}
-          />
-        ))}
+            </Col>
+          ))}
+        </Row>
         <Button
           onClick={() => handleLoadMore()}
           type="primary"

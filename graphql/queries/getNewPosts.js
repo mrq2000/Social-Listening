@@ -6,7 +6,6 @@ const GET_NEW_POSTS = gql`
       nodes{
         comment_id
         content
-        predict
         created_at
       }
     }

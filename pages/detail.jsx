@@ -93,7 +93,7 @@ const OverView = () => {
                     </Col>
 
                     <Col>
-                      <RemoveComment id={`${postId}_${comment.comment_id}`} />
+                      <RemoveComment postId={postId} commentId={comment.comment_id} />
                     </Col>
                   </Row>
                 )}

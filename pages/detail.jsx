@@ -55,10 +55,16 @@ const OverView = () => {
           {data.comments_aggregate.nodes.map((comment) => (
             <Col span={12}>
               <Comment
-                author={<a>Han Solo</a>}
+                author={
+                  <a>{comment.user_name ? comment.user_name : 'Whatever'}</a>
+                }
                 avatar={(
                   <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    src={
+                      comment.user_avatar
+                        ? comment.user_avatar
+                        : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+                    }
                     alt="Han Solo"
                   />
                 )}
@@ -93,7 +99,11 @@ const OverView = () => {
                     </Col>
 
                     <Col>
-                      <RemoveComment postId={postId} commentId={comment.comment_id} />
+                      <RemoveComment
+                        postId={postId}
+                        commentId={comment.comment_id}
+                        id={comment.id}
+                      />
                     </Col>
                   </Row>
                 )}

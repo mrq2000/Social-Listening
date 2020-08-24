@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
-import { Row, Col, Button } from 'antd';
+import {
+  Row, Col, Button, Typography,
+} from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import Layout from '../components/common/Layout';
@@ -56,6 +58,7 @@ const Home = () => {
   if (data && data.posts) {
     return (
       <Layout>
+        {key ? <Typography.Title level={3}>Kết quả tìm kiếm cho: {key}</Typography.Title> : ''}
         <Row gutter={[16, 16]}>
           {data.posts.map((post) => (
             <Col span={12} key={post.id}>

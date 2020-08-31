@@ -8,39 +8,41 @@ import {
   UserOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import Header from './Header';
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
+const path = { '/': '1', '/fanpage': '2', '/token': '3' };
 const MainLayout = ({ children }) => {
+  const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+
   const handleNavigation = (e) => {
     const { key } = e;
-
     switch (key) {
       case '1':
-        Router.push('/');
+        router.push('/');
         break;
       case '2':
-        Router.push('/');
+        router.push('/fanpage');
         break;
       case '3':
-        Router.push('/token');
+        router.push('/token');
         break;
       case '4':
-        Router.push('/');
+        router.push('/');
         break;
       case '5':
-        Router.push('/');
+        router.push('/');
         break;
       case '6':
-        Router.push('/');
+        router.push('/');
         break;
       case '7':
-        Router.push('/');
+        router.push('/');
         break;
       default:
         break;
@@ -58,7 +60,7 @@ const MainLayout = ({ children }) => {
         >
           <Menu
             theme="dark"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[path[router.pathname]]}
             mode="inline"
             onClick={(e) => handleNavigation(e)}
           >
@@ -71,7 +73,6 @@ const MainLayout = ({ children }) => {
             <SubMenu key="sub1" icon={<UserOutlined />} title="Tài Khoản">
               <Menu.Item key="3">Token của bạn</Menu.Item>
               <Menu.Item key="4">Cách Lấy Token</Menu.Item>
-              <Menu.Item key="5">Alex</Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="About us">
               <Menu.Item key="6">Phạm Hữu Anh Quốc</Menu.Item>
@@ -88,7 +89,7 @@ const MainLayout = ({ children }) => {
             >
               <ArrowLeftOutlined
                 style={{ fontSize: 24, marginBottom: 8 }}
-                onClick={() => Router.back()}
+                onClick={() => router.back()}
               />
               {children}
             </div>

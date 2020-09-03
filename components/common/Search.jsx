@@ -14,7 +14,7 @@ const Search = () => {
     <Input.Search
       placeholder="Search..."
       onSearch={(key) => handleSearch(key)}
-      style={{ width: 400, borderRadius: 50 }}
+      style={{ width: 400, borderRadius: 50, marginRight: 16 }}
     />
   );
 };

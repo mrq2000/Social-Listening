@@ -1,14 +1,20 @@
 import React from 'react';
-import { PageHeader } from 'antd';
-
+import { PageHeader, Row } from 'antd';
 import Search from './Search';
+import Login from '../auth/login';
 
+const extra = () => (
+  <Row key="1">
+    <Search />
+    <Login />
+  </Row>
+);
 const Header = () => (
   <PageHeader
     title={[
       <div style={{ color: '#fff', fontFamily: 'monospace' }} key="1">Whatever</div>,
     ]}
-    extra={[<Search key="1" />]}
+    extra={[extra()]}
     style={{ backgroundColor: '#002140', color: 'red' }}
   />
 );

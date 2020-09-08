@@ -34,7 +34,7 @@ const RemoveComment = ({ commentId, postId, id }) => {
     } catch (e) {
       openNotification(
         'Remove Fail',
-        'Bạn không thể xóa comment này. Hãy chắc chắn token của bạn chính xác',
+        'Bạn không thể xóa comment này. Hãy chắc chắn bạn có quyền xóa commeny này',
         'error',
       );
     }

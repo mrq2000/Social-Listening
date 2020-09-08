@@ -10,34 +10,29 @@ import openNotification from '../../helper/notification';
 
 const Login = () => {
   const [accessToken, setAccessToken] = useState(Cookies.get('token'));
-  const checkAccessToken = async () => {
-    const url = `https://graph.facebook.com/me?access_token=${accessToken}`;
+  const getPageInfo = async (accessTokenHere) => {
+    const getPageUrl = `https://graph.facebook.com/me/accounts?fields=picture,name&access_token=${accessTokenHere}`;
     try {
-      const response = await axios({
-        method: 'get',
-        url,
-      });
-      if (response && response.accessToken) {
-        return true;
+      const pageResponse = await axios.get(getPageUrl);
+      if (pageResponse && pageResponse.data) {
+        Cookies.set('pageInfos', JSON.stringify(pageResponse.data.data));
       }
-      return false;
     } catch (e) {
-      setAccessToken('');
-      Cookies.set('token', '');
-      return false;
+      Cookies.set('pageInfos', JSON.stringify([]));
     }
   };
 
-  const responseFacebook = (response) => {
+  const responseFacebook = async (response) => {
+    await getPageInfo(response.accessToken);
     Cookies.set('id', response.id);
     Cookies.set('name', response.name);
     Cookies.set('imgLink', response.picture.data.url);
-    openNotification('Success', 'Thêm Token Thành Công', 'success');
+    openNotification('Success', 'Đăng nhập Thành Công', 'success');
     Cookies.set('token', response.accessToken);
     setAccessToken(response.accessToken);
   };
 
-  if (!accessToken || !checkAccessToken()) {
+  if (!accessToken) {
     return (
       <FacebookLogin
         appId="2931610017126226"
@@ -62,8 +57,8 @@ const Login = () => {
             color: '#fff', fontWeight: 900, display: 'block',
           }}
           onClick={() => {
-            setAccessToken('');
             Cookies.remove('token');
+            setAccessToken('');
           }}
         >
           Đăng Xuất

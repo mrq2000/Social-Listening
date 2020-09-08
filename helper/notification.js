@@ -4,7 +4,7 @@ const openNotification = (message, description, type = 'info') => {
   notification[type]({
     message,
     description,
-    placement: 'topRight',
+    placement: 'bottomRight',
   });
 };
 

@@ -5,7 +5,6 @@ import {
   DesktopOutlined,
   PieChartOutlined,
   TeamOutlined,
-  UserOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -30,18 +29,9 @@ const MainLayout = ({ children }) => {
         router.push('/fanpage');
         break;
       case '3':
-        router.push('/token');
+        router.push('/');
         break;
       case '4':
-        router.push('/');
-        break;
-      case '5':
-        router.push('/');
-        break;
-      case '6':
-        router.push('/');
-        break;
-      case '7':
         router.push('/');
         break;
       default:
@@ -70,13 +60,9 @@ const MainLayout = ({ children }) => {
             <Menu.Item key="2" icon={<DesktopOutlined />}>
               Fanpage của bạn
             </Menu.Item>
-            <SubMenu key="sub1" icon={<UserOutlined />} title="Tài Khoản">
-              <Menu.Item key="3">Token của bạn</Menu.Item>
-              <Menu.Item key="4">Cách Lấy Token</Menu.Item>
-            </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="About us">
-              <Menu.Item key="6">Phạm Hữu Anh Quốc</Menu.Item>
-              <Menu.Item key="8">Ngô Song Việt Hoàng</Menu.Item>
+              <Menu.Item key="3">Phạm Hữu Anh Quốc</Menu.Item>
+              <Menu.Item key="4">Ngô Song Việt Hoàng</Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>

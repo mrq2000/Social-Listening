@@ -11,7 +11,7 @@ import openNotification from '../../helper/notification';
 const Login = () => {
   const [accessToken, setAccessToken] = useState(Cookies.get('token'));
   const getPageInfo = async (accessTokenHere) => {
-    const getPageUrl = `https://graph.facebook.com/me/accounts?fields=picture,name&access_token=${accessTokenHere}`;
+    const getPageUrl = `https://graph.facebook.com/me/accounts?fields=picture,name,access_token&access_token=${accessTokenHere}`;
     try {
       const pageResponse = await axios.get(getPageUrl);
       if (pageResponse && pageResponse.data) {
@@ -23,20 +23,21 @@ const Login = () => {
   };
 
   const responseFacebook = async (response) => {
-    await getPageInfo(response.accessToken);
-    Cookies.set('id', response.id);
-    Cookies.set('name', response.name);
-    Cookies.set('imgLink', response.picture.data.url);
-    openNotification('Success', 'Đăng nhập Thành Công', 'success');
-    Cookies.set('token', response.accessToken);
-    setAccessToken(response.accessToken);
+    if (response.id) {
+      await getPageInfo(response.accessToken);
+      Cookies.set('id', response.id);
+      Cookies.set('name', response.name);
+      Cookies.set('imgLink', response.picture && response.picture.data.url);
+      openNotification('Success', 'Đăng nhập Thành Công', 'success');
+      Cookies.set('token', response.accessToken);
+      setAccessToken(response.accessToken);
+    }
   };
 
   if (!accessToken) {
     return (
       <FacebookLogin
         appId="2931610017126226"
-        autoLoad
         fields="name,email,picture"
         scope="pages_manage_engagement"
         callback={responseFacebook}

@@ -12,7 +12,7 @@ const Search = () => {
 
   return (
     <Input.Search
-      placeholder="Search..."
+      placeholder="Tìm kiếm..."
       onSearch={(key) => handleSearch(key)}
       style={{ width: 400, borderRadius: 50, marginRight: 16 }}
     />

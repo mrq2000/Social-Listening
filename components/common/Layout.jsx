@@ -58,9 +58,9 @@ const MainLayout = ({ children }) => {
               Trang Chủ
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-              Fanpage của bạn
+              Trang của bạn
             </Menu.Item>
-            <SubMenu key="sub2" icon={<TeamOutlined />} title="About us">
+            <SubMenu key="sub2" icon={<TeamOutlined />} title="Về chúng tôi">
               <Menu.Item key="3">Phạm Hữu Anh Quốc</Menu.Item>
               <Menu.Item key="4">Ngô Song Việt Hoàng</Menu.Item>
             </SubMenu>

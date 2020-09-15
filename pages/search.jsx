@@ -68,7 +68,7 @@ const Home = () => {
         </Row>
 
         <Button onClick={() => handleLoadMore()} type="primary" loading={load}>
-          Get More
+          Xem thêm
         </Button>
       </Layout>
     );

@@ -94,7 +94,7 @@ const OverView = () => {
                         target="_blank"
                         href={`https://www.facebook.com/${comment.comment_id}`}
                       >
-                        click me
+                        xem thêm
                       </a>
                     </Col>
 
@@ -116,7 +116,7 @@ const OverView = () => {
           type="primary"
           loading={loading}
         >
-          Get More
+          Xem thêm
         </Button>
       </Layout>
     );

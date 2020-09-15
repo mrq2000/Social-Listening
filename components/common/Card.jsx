@@ -41,7 +41,7 @@ const MainCard = ({ post }) => {
           <Col>
             {post.img_link && post.img_link.startsWith('http') ? (
               <img
-                alt="example"
+                alt="Pic"
                 src={post.img_link}
                 style={{ width: 150, height: 150, borderRadius: 20 }}
               />

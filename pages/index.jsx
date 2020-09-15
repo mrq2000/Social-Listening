@@ -43,7 +43,7 @@ const Home = () => {
             type="primary"
             onClick={() => router.push({ pathname: '/search', query: { key: '' } })}
           >
-            Watch More
+            Xem thêm
           </Button>
         </>
       );

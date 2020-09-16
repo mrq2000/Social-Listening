@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button, Modal, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import {
+  Button, Modal, Typography, Row, Col, Card,
+} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -12,6 +14,16 @@ import DELETE_COMMENT from '../../graphql/mutations/deteleComment';
 const { confirm } = Modal;
 
 const RemoveComment = ({ commentId, postId, id }) => {
+  const [pageToken, setPageToken] = useState('');
+  const [open, setOpen] = useState(false);
+  const clone = Cookies.get('pageInfos');
+  const [pageInfos, setPageInfos] = useState();
+
+  useEffect(() => {
+    const pageInfosJson = JSON.parse(clone);
+    setPageInfos(pageInfosJson);
+  }, [clone]);
+
   const [deleteComment, { error }] = useMutation(DELETE_COMMENT, {
     variables: {
       id: parseInt(id, 10),
@@ -20,8 +32,7 @@ const RemoveComment = ({ commentId, postId, id }) => {
 
   if (error) console.log(error);
   const remove = async () => {
-    const token = Cookies.get('Token');
-    const url = `https://graph.facebook.com/${postId}_${commentId}?access_token=${token}`;
+    const url = `https://graph.facebook.com/${postId}_${commentId}?access_token=${pageToken}`;
     try {
       const response = await axios({
         method: 'delete',
@@ -54,15 +65,52 @@ const RemoveComment = ({ commentId, postId, id }) => {
     });
   };
 
+  const renderChoosePage = () => {
+    if (pageInfos) {
+      return (
+        <Modal visible={open}>
+          <Typography.Title level={3}>
+            Chọn Fanpage để xóa
+          </Typography.Title>
+          <Row gutter={[16, 16]}>
+            {
+              pageInfos.map((pageInfo) => (
+                <Col span={12} key={pageInfo.id}>
+                  <Card
+                    hoverable
+                    cover={<img alt="example" src={pageInfo.picture.data.url} />}
+                    onClick={() => {
+                      console.log(pageInfo);
+                      setPageToken(pageInfo.access_token);
+                      handleRemoveTask();
+                      setOpen(false);
+                    }}
+                  >
+                    <Card.Meta title={pageInfo.name} description={`id: ${pageInfo.id}`} />
+                  </Card>
+                </Col>
+              ))
+            }
+          </Row>
+        </Modal>
+      );
+    }
+    return <></>;
+  };
+
   return (
-    <Button
-      type="primary"
-      danger
-      onClick={() => handleRemoveTask()}
-      size="small"
-    >
-      Remove
-    </Button>
+    <>
+      <Button
+        type="primary"
+        danger
+        onClick={() => setOpen(true)}
+        size="small"
+      >
+        Remove
+      </Button>
+
+      {renderChoosePage()}
+    </>
   );
 };
 

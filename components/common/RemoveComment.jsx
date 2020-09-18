@@ -14,7 +14,6 @@ import DELETE_COMMENT from '../../graphql/mutations/deteleComment';
 const { confirm } = Modal;
 
 const RemoveComment = ({ commentId, postId, id }) => {
-  const [pageToken, setPageToken] = useState('');
   const [open, setOpen] = useState(false);
   const clone = Cookies.get('pageInfos');
   const [pageInfos, setPageInfos] = useState();
@@ -31,8 +30,8 @@ const RemoveComment = ({ commentId, postId, id }) => {
   });
 
   if (error) console.log(error);
-  const remove = async () => {
-    const url = `https://graph.facebook.com/${postId}_${commentId}?access_token=${pageToken}`;
+  const remove = async (token) => {
+    const url = `https://graph.facebook.com/${postId}_${commentId}?access_token=${token}`;
     try {
       const response = await axios({
         method: 'delete',
@@ -51,7 +50,7 @@ const RemoveComment = ({ commentId, postId, id }) => {
     }
   };
 
-  const handleRemoveTask = async () => {
+  const handleRemoveTask = async (token) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: (
@@ -60,7 +59,7 @@ const RemoveComment = ({ commentId, postId, id }) => {
         </Typography.Text>
       ),
       onOk() {
-        remove();
+        remove(token);
       },
     });
   };
@@ -80,9 +79,7 @@ const RemoveComment = ({ commentId, postId, id }) => {
                     hoverable
                     cover={<img alt="example" src={pageInfo.picture.data.url} />}
                     onClick={() => {
-                      console.log(pageInfo);
-                      setPageToken(pageInfo.access_token);
-                      handleRemoveTask();
+                      handleRemoveTask(pageInfo.access_token);
                       setOpen(false);
                     }}
                   >

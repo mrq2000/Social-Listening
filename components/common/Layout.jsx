@@ -6,6 +6,7 @@ import {
   PieChartOutlined,
   TeamOutlined,
   ArrowLeftOutlined,
+  PlusOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
@@ -59,6 +60,9 @@ const MainLayout = ({ children }) => {
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
               Trang của bạn
+            </Menu.Item>
+            <Menu.Item key="5" icon={<PlusOutlined />}>
+              Thêm Mới
             </Menu.Item>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="Về chúng tôi">
               <Menu.Item key="3">Phạm Hữu Anh Quốc</Menu.Item>
